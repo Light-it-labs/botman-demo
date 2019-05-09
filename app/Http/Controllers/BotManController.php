@@ -40,4 +40,10 @@ class BotManController extends Controller
     {
         $bot->startConversation(new Postulacion());
     }
+
+    public function faq(BotMan $bot)
+    {
+        $bot->reply('Puedes preguntarme sobre mis creadores, sobre mí.');
+        $bot->reply('Preguntame y espero poder ayudarte!');
+    }
 }
