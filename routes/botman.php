@@ -9,7 +9,7 @@ $botman->hears('Hi', function ($bot) {
 });
 $botman->hears('Start conversation', BotManController::class.'@startConversation');
 
-$botman->hears('(1|[p/P]ostularme)', BotManController::class.'@postularme');
+$botman->hears('(1|.*[p/P]ostularme.*)', BotManController::class.'@postularme');
 
 $botman->hears('(2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', BotManController::class.'@faq');
 

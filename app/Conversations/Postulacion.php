@@ -50,7 +50,7 @@ class Postulacion extends Conversation
         return $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 $this->experience = $answer->getValue();
-            }else{
+            } else {
                 $this->experience = $answer->getText();
             }
             $this->say('Muchas gracias por postularte. Estaremos en contacto!');
