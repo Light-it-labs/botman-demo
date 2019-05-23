@@ -16,16 +16,18 @@ $botman->hears('(2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', Bo
 $dialogflow = Dialogflow::create(env('DIALOGFLOW_TOKEN'))->listenForAction();
 $botman->middleware->received($dialogflow);
 
-$botman->hears('feedback|problem', function ($bot) {
+$botman->hears('feedback', function ($bot) {
     // The incoming message matched the "my_api_action" on Dialogflow
     // Retrieve Dialogflow information:
     $extras = $bot->getMessage()->getExtras();
     $apiReply = $extras['apiReply'];
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
+    if (!preg_match('(1|.*[p/P]ostularme.*|2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', $extras['apiParameters']['message'])) {
+        logger('Feedback:' . json_encode($extras));
+        $bot->reply('Muchas gracias por tu feedback!');
+    }
 
-    logger('Feedback:' . json_encode($extras));
-    $bot->reply('Muchas gracias por tu feedback!');
 })->middleware($dialogflow);
 
 $botman->hears('support.*', function ($bot) {
@@ -36,7 +38,9 @@ $botman->hears('support.*', function ($bot) {
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
 
-    $bot->reply($apiReply);
+    if (!preg_match('(1|.*[p/P]ostularme.*|2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', $extras['apiParameters']['message'])) {
+        $bot->reply($apiReply);
+    }
 })->middleware($dialogflow);
 
 $botman->fallback(function($bot) {
