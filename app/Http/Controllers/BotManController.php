@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversations\Postulacion;
+use App\Conversations\JobApplication;
 use BotMan\BotMan\BotMan;
 use Illuminate\Http\Request;
 use App\Conversations\ExampleConversation;
@@ -36,14 +36,14 @@ class BotManController extends Controller
         $bot->startConversation(new ExampleConversation());
     }
 
-    public function postularme(BotMan $bot)
+    public function apply(BotMan $bot)
     {
-        $bot->startConversation(new Postulacion());
+        $bot->startConversation(new JobApplication());
     }
 
     public function faq(BotMan $bot)
     {
-        $bot->reply('Puedes preguntarme sobre mis creadores, sobre mí.');
-        $bot->reply('Preguntame y espero poder ayudarte!');
+        $bot->reply('You can ask questions about me or my creators.');
+        $bot->reply('Ask me and I hope to be helpful');
     }
 }

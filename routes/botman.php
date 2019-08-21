@@ -9,9 +9,9 @@ $botman->hears('Hi', function ($bot) {
 });
 $botman->hears('Start conversation', BotManController::class.'@startConversation');
 
-$botman->hears('(1|.*[p/P]ostularme.*)', BotManController::class.'@postularme');
+$botman->hears('(1|.*[a/A]pply.*)', BotManController::class.'@apply');
 
-$botman->hears('(2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', BotManController::class.'@faq');
+$botman->hears('(2|[f/F][a/A][q/Q]|got a question|frequent questions)', BotManController::class.'@faq');
 
 $dialogflow = Dialogflow::create(env('DIALOGFLOW_TOKEN'))->listenForAction();
 $botman->middleware->received($dialogflow);
@@ -23,9 +23,9 @@ $botman->hears('feedback', function ($bot) {
     $apiReply = $extras['apiReply'];
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
-    if (!preg_match('(1|.*[p/P]ostularme.*|2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', $extras['apiParameters']['message'])) {
+    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $extras['apiParameters']['message'])) {
         logger('Feedback:' . json_encode($extras));
-        $bot->reply('Muchas gracias por tu feedback!');
+        $bot->reply('Thanks for your feedback!');
     }
 
 })->middleware($dialogflow);
@@ -38,12 +38,12 @@ $botman->hears('support.*', function ($bot) {
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
 
-    if (!preg_match('(1|.*[p/P]ostularme.*|2|[f/F][a/A][q/Q]|tengo una pregunta|preguntas frecuentes)', $extras['apiParameters']['message'])) {
+    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $extras['apiParameters']['message'])) {
         $bot->reply($apiReply);
     }
 })->middleware($dialogflow);
 
 $botman->fallback(function($bot) {
-    $bot->randomReply(['Perdon! Todavía no soy capaz de entender este mensaje. <br> Ingresa "Postularme" o "FAQ" para iniciar una conversación.',
-        'Upps! No te entendí', 'Emmm. No recuerdo que quiere decir eso, preguntame otra cosa!']);
+    $bot->randomReply(["Sorry! I'm not ready to understand this message. <br> Type 'Apply for a job' o 'FAQ' to start a conversation.",
+        "Oops! I didn't get u", "Ahmm. I don't remember what does it mean, ask me something else!"]);
 });

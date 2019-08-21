@@ -7,7 +7,7 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 
-class Postulacion extends Conversation
+class JobApplication extends Conversation
 {
 
     protected $firstname;
@@ -16,18 +16,18 @@ class Postulacion extends Conversation
 
     public function askFirstname()
     {
-        $this->say('Que buena noticia!');
-        $this->ask('Cuál es tu nombre?', function(Answer $answer){
+        $this->say('Great news!');
+        $this->ask("What's your name?", function(Answer $answer){
             $this->firstname = $answer->getText();
 
-            $this->say('Mucho gusto '. $this->firstname);
+            $this->say('Nice to meet you '. $this->firstname);
             $this->askEmail();
         });
     }
 
     public function askEmail()
     {
-        $this->ask('A qué mail te gustaría que nos comuniquemos?', function(Answer $answer) {
+        $this->ask('May I have your e-email?', function(Answer $answer) {
             $this->email = $answer->getText();
 
             $this->askExperience();
@@ -39,11 +39,11 @@ class Postulacion extends Conversation
      */
     public function askExperience()
     {
-        $this->say('Última pregunta');
-        $question = Question::create("Tenes experiencia en Laravel?")
+        $this->say('Last question');
+        $question = Question::create("Do you have experience with Laravel?")
             ->callbackId('ask_experience')
             ->addButtons([
-                Button::create('Si')->value('si'),
+                Button::create('Yes')->value('yes'),
                 Button::create('No')->value('no'),
             ]);
 
@@ -53,8 +53,8 @@ class Postulacion extends Conversation
             } else {
                 $this->experience = $answer->getText();
             }
-            $this->say('Muchas gracias por postularte. Estaremos en contacto!');
-            logger('Nuevo registro: ' . 'Nombre: ' . $this->firstname . '. Email: ' . $this->email . '. Tiene experiencia: ' . $this->experience);
+            $this->say('Thanks for your application. We will keep in touch!');
+            logger('New application: ' . 'Name: ' . $this->firstname . '. Email: ' . $this->email . '. Has Laravel experience: ' . $this->experience);
         });
     }
 
