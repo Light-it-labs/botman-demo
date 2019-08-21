@@ -71,8 +71,8 @@
         frameEndpoint: '/chatbot',
         aboutText: 'Powered by Light-it',
         title: 'Botman demo',
-        introMessage: 'Hola, bienvenid@ a Light-it Botman! <br> Ingrese la opción deseada: <br> 1. Postularme <br> 2. FAQ',
-        placeholderText: 'Escribe aquí tu mensaje...',
+        introMessage: 'Hi, welcome to Light-it Botman! <br> Type your selected option: <br> 1. Apply for a job <br> 2. FAQ',
+        placeholderText: 'Type your message here...',
         mainColor: '#f38017',
         bubbleBackground: '#f38017',
         aboutLink: 'https://lightit.io'
