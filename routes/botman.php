@@ -23,22 +23,21 @@ $botman->hears('feedback', function ($bot) {
     $apiReply = $extras['apiReply'];
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
-    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $extras['apiParameters']['message'])) {
+    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $apiAction)) {
         logger('Feedback:' . json_encode($extras));
         $bot->reply('Thanks for your feedback!');
     }
 
 })->middleware($dialogflow);
 
-$botman->hears('support.*', function ($bot) {
+$botman->hears('(support.*)', function ($bot) {
     // The incoming message matched the "my_api_action" on Dialogflow
     // Retrieve Dialogflow information:
     $extras = $bot->getMessage()->getExtras();
     $apiReply = $extras['apiReply'];
     $apiAction = $extras['apiAction'];
     $apiIntent = $extras['apiIntent'];
-
-    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $extras['apiParameters']['message'])) {
+    if (!preg_match('(1|.*[a/A]pply.*|2|[f/F][a/A][q/Q]|got a question|frequent questions)', $apiAction)) {
         $bot->reply($apiReply);
     }
 })->middleware($dialogflow);
